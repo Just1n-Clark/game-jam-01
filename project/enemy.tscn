@@ -4,7 +4,11 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7xaro"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7k104"]
+albedo_color = Color(1, 0, 0, 1)
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_7k104"]
+material = SubResource("StandardMaterial3D_7k104")
 
 [node name="Enemy" type="CharacterBody3D" unique_id=1367800225]
 script = ExtResource("1_7k104")

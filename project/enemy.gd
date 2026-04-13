@@ -19,10 +19,18 @@ func _physics_process(delta: float) -> void:
 	var next_location = nav_agent.get_next_path_position()
 	var new_velocity = (next_location - current_location).normalized() * speed
 	
-	velocity = direction * speed
+	velocity = new_velocity + direction * speed
+	
+	if not is_on_floor():
+		velocity.y -= 300 * delta
+	
 	move_and_slide()
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		var mouse_pos = get_viewport().get_mouse_position()
-		nav_agent.target_position = mouse_pos
+		var mouse_pos_2d = get_viewport().get_mouse_position()
+		var camera = get_viewport().get_camera_3d()
+		
+		var mouse_pos_3d: Vector3 = camera.project_position(mouse_pos_2d, 0)
+		
+		nav_agent.target_position = mouse_pos_3d

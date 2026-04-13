@@ -5,6 +5,13 @@ const JUMP_VELOCITY = 4.5
 const WALK_SPEED = 5.0
 const SPRINT_SPEED = 15.0
 
+var input_dir: Vector2
+var direction: Vector3
+
+func _input(event: InputEvent) -> void:
+	input_dir = Input.get_vector("left", "right", "forward", "back")
+	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
@@ -18,8 +25,6 @@ func _physics_process(delta: float) -> void:
 	else:
 		SPEED = WALK_SPEED
 
-	var input_dir := Input.get_vector("left", "right", "forward", "back")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
