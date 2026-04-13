@@ -1,16 +1,41 @@
 [gd_scene format=3 uid="uid://5wlihmvin01f"]
 
-[ext_resource type="Script" uid="uid://cewhlg3wr8mmj" path="res://Scripts/player.gd" id="1_lc1oi"]
-[ext_resource type="PackedScene" uid="uid://ccfh4ctakr7qd" path="res://Scenes/player.tscn" id="2_8od7v"]
+[sub_resource type="GDScript" id="GDScript_o3qbn"]
+script/source = "extends CharacterBody3D
+
+
+const SPEED = 5.0
+const JUMP_VELOCITY = 4.5
+
+
+func _physics_process(delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	# Handle jump.
+	if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var input_dir := Input.get_vector(\"left\", \"right\", \"forward\", \"back\")
+	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	if direction:
+		velocity.x = direction.x * SPEED
+		velocity.z = direction.z * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.z = move_toward(velocity.z, 0, SPEED)
+
+	move_and_slide()
+"
 
 [sub_resource type="BoxMesh" id="BoxMesh_lc1oi"]
 size = Vector3(10, 1, 10)
 
 [node name="test" type="Node3D" unique_id=1943630602]
-script = ExtResource("1_lc1oi")
+script = SubResource("GDScript_o3qbn")
 
 [node name="floor" type="MeshInstance3D" parent="." unique_id=1369594231]
 mesh = SubResource("BoxMesh_lc1oi")
-
-[node name="Player" parent="." unique_id=1098926013 instance=ExtResource("2_8od7v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3811445, 0)
