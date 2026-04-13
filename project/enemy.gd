@@ -25,4 +25,4 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		var mouse_pos = get_viewport().get_mouse_position()
-		print("Mouse at: ", mouse_pos)
+		nav_agent.target_position = mouse_pos
