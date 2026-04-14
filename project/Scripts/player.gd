@@ -4,7 +4,7 @@ extends CharacterBody3D
 var SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const WALK_SPEED = 5.0
-const SPRINT_SPEED = 15.0
+const SPRINT_SPEED = 10.0
 
 var input_dir: Vector2
 var direction: Vector3

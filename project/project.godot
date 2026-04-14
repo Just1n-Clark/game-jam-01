@@ -15,6 +15,10 @@ run/main_scene="uid://hdm1u84gcauf"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*uid://c62magsjssjav"
+
 [input]
 
 forward={
